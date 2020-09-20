@@ -1,0 +1,41 @@
+<div class="top">
+  <ng-container *ngIf="!orderedOrder.length">
+    <div>
+      (No order)
+    </div>
+  </ng-container>
+
+  <ng-container *ngIf="orderedOrder.length">
+    <div *ngFor="let _o of orderedOrder; let i = index">
+      {{ _o. thing }} - {{ _o.quantity }}
+    </div>
+  </ng-container>
+  <div>
+    <a class="clickable" (click)="clear()">CLEAR</a> | <a class="clickable" (click)="backspace()">BACKSPACE</a>
+  </div>
+</div>
+
+<div class="bottom">
+  <div *ngIf="!pendingOrder">
+    <div (click)="addThing(thing)" class="thing" *ngFor="let thing of things">
+      <a>{{ thing }}</a>
+    </div>
+  </div>
+
+  <div *ngIf="pendingOrder">
+    <div>
+      Thing: {{ pendingOrder.thing }} | <a (click)="cancel()">CANCEL</a>
+    </div>
+    <div>
+      Quantity: {{ pendingOrder.quantity }} | <a (click)="addOrder()">ADD TO ORDER</a>
+    </div>
+
+    <div class="nums">
+      <div class="num"
+        *ngFor="let num of [1,2,3,4,5,6,7,8,9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24]">
+        <div class="clickable" (click)="setQuantity(num)">{{ num }}</div>
+      </div>
+    </div>
+
+  </div>
+</div>

@@ -1,0 +1,32 @@
+div {
+    padding: 12px 0;
+    box-sizing: border-box;
+    width: 100%;
+}
+
+.top {
+    padding-bottom: 80px;
+}
+
+.clickable, a {
+    cursor: pointer;
+    color: teal;
+    text-decoration: underline;
+}
+
+.nums {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.thing {
+    border: 1px solid teal;
+    width: 100%;
+    text-align: center;
+}
+
+.num {
+    border: 1px solid teal;
+    width: 33%;
+    text-align: center;
+}
