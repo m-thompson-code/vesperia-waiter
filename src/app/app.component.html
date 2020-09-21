@@ -62,7 +62,7 @@
     </div>
 </div>
 
-<div class="backspace-button-container bottom-padding">
+<div *ngIf="orderedOrder.length" class="backspace-button-container bottom-padding">
     <button mat-raised-button color="accent" (click)="pendingOrder ? cancel() : backspace()" [disabled]="!orderedOrder.length">{{ pendingOrder ? 'Cancel order item' : 'Forget that last one...' }}</button>
 </div>
 
