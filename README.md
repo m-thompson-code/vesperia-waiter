@@ -2,9 +2,17 @@
 
 [Angular](https://github.com/angular/angular-cli) Project
 
-## Development server
+## Npm scripts
 
 Run `npm run start` for a dev server.
+
+Run `npm run build` for aot production build.
+
+Run `npm run host` to deploy to firebase
+
+Run `npm run deploy` to build then deploy to firebase
+
+Currently the project is set to deploy to my person firebase project. If you'd like to deploy to your own firebase project, you'll need to edit the firebase configuration found in [FirebaseService](https://github.com/m-thompson-code/vesperia-waiter/blob/master/src/app/services/firebase.service.ts).
 
 ## Description
 
