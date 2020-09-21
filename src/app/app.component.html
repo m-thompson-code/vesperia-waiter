@@ -58,12 +58,12 @@
     </div>
 
     <div class="clear-button-container">
-        <button mat-raised-button (click)="clear()">CLEAR</button>
+        <button mat-raised-button (click)="clear()" [disabled]="!orderedOrder.length">CLEAR</button>
     </div>
 </div>
 
 <div class="backspace-button-container bottom-padding">
-    <button mat-raised-button color="accent" (click)="pendingOrder ? cancel() : backspace()">{{ pendingOrder ? 'Cancel order item' : 'Forget that last one...' }}</button>
+    <button mat-raised-button color="accent" (click)="pendingOrder ? cancel() : backspace()" [disabled]="!orderedOrder.length">{{ pendingOrder ? 'Cancel order item' : 'Forget that last one...' }}</button>
 </div>
 
 <div class="bottom bottom-padding">
