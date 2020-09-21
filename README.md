@@ -1,4 +1,4 @@
-# VesperiaWaiter
+# Vesperia Waiter App - App to beat the Waiter Minigame in Tales of Vesperia
 
 [Angular](https://github.com/angular/angular-cli) Project
 
