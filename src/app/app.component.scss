@@ -1,17 +1,145 @@
+@import '../variables.scss';
+
+:host {
+    display: flex;
+    flex-direction: column;
+
+    padding: 0 13vw;
+}
+
+.settings-icon-container {
+    position: relative;
+
+    height: 40px;
+    width: 100%;
+
+    margin-top: 12px;
+    margin-bottom: 12px;
+
+    overflow: hidden;
+
+    .settings-icon {
+        cursor: pointer;
+        position: absolute;
+        right: 0;
+        top: 0;
+        z-index: 1;
+        height: 40px;
+        width: 40px;
+
+        border-radius: 8px;
+    
+        svg {
+            fill: currentColor;
+            height: 40px;
+            width: 40px;
+
+            transition: transform 1s linear;
+            transition: transform 1s cubic-bezier(0.61, 0.01, 0.28, 1.26);
+        }
+    }
+    .settings-icon.active {
+        svg {
+            transform: rotate(300deg);
+        }
+    }
+}
+
+.settings {
+    max-height: 0;
+    overflow: hidden;
+
+    transition-property: max-height, padding;
+    transition-duration: 400ms;
+    transition-timing-function: linear;
+    transition-timing-function: cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.settings.active {
+    max-height: 500px;
+}
+
+button, .button {
+    height: 48px;
+    line-height: 48px;
+    font-size: 20px;
+}
+
+mat-slide-toggle {
+    display: block;
+    padding-bottom: 8px;
+}
+
+mat-slider {
+    width: 100%;
+}
+
+.slider-container {
+    padding-bottom: 12px;
+}
+
 div {
-    padding: 12px 0;
     box-sizing: border-box;
     width: 100%;
 }
 
 .top {
-    padding-bottom: 80px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+
+    .no-order-items {
+        font-style: italic;
+    }
+
+    .order-item {
+        padding-bottom: 4px;
+    }
+
+    button, .clear-button-container {
+        min-width: 120px;
+        width: 120px;
+    }
 }
 
-.clickable, a {
-    cursor: pointer;
-    color: teal;
-    text-decoration: underline;
+.bottom-padding {
+    padding-bottom: 32px;
+}
+
+.backspace-button-container {
+    width: 100%;
+
+    button {
+        width: 100%;
+    }
+}
+
+.thing {
+    width: 100%;
+    text-align: center;
+    padding-bottom: 4px;
+
+    button {
+        width: 100%;
+    }
+    button:hover {
+        text-decoration: underline;
+    }
+}
+
+.thing.disabled {
+    button:hover {
+        text-decoration: none;
+    }
+}
+
+.pending-order {
+    padding-bottom: 16px;
+}
+
+.nums-container {
+    width: 100%;
+    overflow: hidden;
 }
 
 .nums {
@@ -19,14 +147,72 @@ div {
     flex-wrap: wrap;
 }
 
-.thing {
-    border: 1px solid teal;
-    width: 100%;
+.num {
+    width: (100%/3);
     text-align: center;
+    box-sizing: border-box;
+    padding-right: 2px;
+    padding-bottom: 2px;
+
+    button {
+        width: 100%;
+    }
 }
 
-.num {
-    border: 1px solid teal;
-    width: 33%;
-    text-align: center;
+.donate-button {
+    margin-right: 16px;
+}
+
+@media only screen and (max-width: $desktop_width) {
+
+}
+
+@media only screen and (max-width: $tablet_width) and (orientation: portrait) {
+
+}
+
+@media only screen and (max-width: $mobile_width) and (orientation: portrait) {
+    :host {
+        padding: 0 2.5vw;
+    }
+
+    .top {
+        flex-direction: column-reverse;
+
+        button, .clear-button-container {
+            width: 100%;
+        }
+
+        .clear-button-container {
+            padding-bottom: 32px;
+        }
+    }
+
+    .settings-icon-container {
+        margin-top: 2.5vw;
+    }
+
+    mat-slide-toggle {
+        font-size: 16px;
+    }
+}
+
+@media only screen and (max-width: 340px) {
+    mat-slide-toggle {
+        font-size: 14px;
+    }
+}
+
+@media only screen and (max-width: $landscape_width) and (max-height: $tablet_width) and (orientation: landscape) {
+
+}
+
+@media only screen and (max-width: $landscape_width) and (max-height: $mobile_width) and (orientation: landscape) {
+    :host {
+        padding: 0 2.5vw;
+    }
+    
+    .settings-icon-container {
+        margin-top: 2.5vw;
+    }
 }

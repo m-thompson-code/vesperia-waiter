@@ -1,4 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { MatSlideToggleChange } from '@angular/material/slide-toggle';
+import { MatSliderChange } from '@angular/material/slider';
 import { NavigationEnd, Router, RouterEvent } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { AnalyticsService } from './services/analytics.service';
@@ -25,12 +27,29 @@ export class AppComponent implements OnInit, OnDestroy {
         quantity: number;
     }[] = [];
 
+    public orderMap: {
+        [thing in Thing]?: boolean;
+    } = {};
+
     public pendingOrder?: {
         thing: Thing;
         quantity: number;
     }
 
     private _routerEventsSub?: Subscription;
+
+    public showSettings?: boolean;
+
+    public things0: Thing[] = [];
+    public things1: Thing[] = [];
+    public things2: Thing[] = [];
+    public things3: Thing[] = [];
+
+    public lightMode?: boolean;
+
+    public maxItems: number = 0;
+    public maxItemsAry: number[] = [];
+
     constructor(private router: Router, public firebaseService: FirebaseService, private analyticsService: AnalyticsService) {
 
     }
@@ -43,7 +62,80 @@ export class AppComponent implements OnInit, OnDestroy {
         this.order = [];
         this.orderedOrder = [];
 
-        this.things = [
+        this.things0 = [
+            'Amango tea',
+            'Spicy shrimp',
+            'Tortoise stew',
+            'Earth spirit parfait',
+            'Set lunch B',
+            // 'Spaghetti and meatballs',
+            // 'Tomato soup',
+            // 'Ice cream',
+            // 'Grilled fish',
+            // 'Mandragosso',
+            // // Page two
+            // 'Polwigle dumpling',
+            // 'Mabo curry',
+            // "Don's special",
+            // 'Clam chowder',
+            // 'Seafood pasta',
+            // 'Fruit cocktail',
+            // 'Rappig steak',
+            // 'Cream stew',
+            // 'Chocolate cake',
+            // 'Set lunch A',
+        ];
+
+        this.things1 = [
+            'Amango tea',
+            'Spicy shrimp',
+            'Tortoise stew',
+            'Earth spirit parfait',
+            'Set lunch B',
+            'Spaghetti and meatballs',
+            'Tomato soup',
+            'Ice cream',
+            'Grilled fish',
+            'Mandragosso',
+            // // Page two
+            // 'Polwigle dumpling',
+            // 'Mabo curry',
+            // "Don's special",
+            // 'Clam chowder',
+            // 'Seafood pasta',
+            // 'Fruit cocktail',
+            // 'Rappig steak',
+            // 'Cream stew',
+            // 'Chocolate cake',
+            // 'Set lunch A',
+        ];
+
+        
+        this.things2 = [
+            'Amango tea',
+            'Spicy shrimp',
+            'Tortoise stew',
+            'Earth spirit parfait',
+            'Set lunch B',
+            'Spaghetti and meatballs',
+            'Tomato soup',
+            'Ice cream',
+            'Grilled fish',
+            'Mandragosso',
+            // Page two
+            'Polwigle dumpling',
+            'Mabo curry',
+            "Don's special",
+            'Clam chowder',
+            'Seafood pasta',
+            // 'Fruit cocktail',
+            // 'Rappig steak',
+            // 'Cream stew',
+            // 'Chocolate cake',
+            // 'Set lunch A',
+        ];
+
+        this.things3 = [
             'Amango tea',
             'Spicy shrimp',
             'Tortoise stew',
@@ -67,7 +159,8 @@ export class AppComponent implements OnInit, OnDestroy {
             'Set lunch A',
         ];
 
-        this.pendingOrder = undefined;
+        this.setItems(0);
+        this.setMaxItems(9);
     }
     
 	private _checkRouterEvent(routerEvent: RouterEvent): void {
@@ -128,27 +221,78 @@ export class AppComponent implements OnInit, OnDestroy {
     public updateOrder(): void {
         this.orderedOrder = this.order.slice(0);
 
-        this.orderedOrder.sort((a, b) => {
-        let aV = 0;
-        let bV = 0;
+        this.orderMap = {};
 
-        for (let i = 0; i < this.things.length; i++) {
-            const thing = this.things[i];
-
-            if (a.thing === thing) {
-            aV = i;
-            }
-
-            if (b.thing === thing) {
-            bV = i;
-            }
+        for (const order of this.orderedOrder) {
+            this.orderMap[order.thing] = true;
         }
 
-        return aV - bV;
+        this.orderedOrder.sort((a, b) => {
+            let aV = 0;
+            let bV = 0;
+
+            for (let i = 0; i < this.things.length; i++) {
+                const thing = this.things[i];
+
+                if (a.thing === thing) {
+                aV = i;
+                }
+
+                if (b.thing === thing) {
+                bV = i;
+                }
+            }
+
+            return aV - bV;
         });
     }
 
-    public ngOnDestroy(): void {
+    public setItems(num: number, toggleEvent?: MatSlideToggleChange): void {
+        console.log(num, toggleEvent);
 
+        if (toggleEvent && !toggleEvent.checked) {
+            num -= 1;
+        }
+
+        if (num === 0) {
+            this.things = this.things0;
+        } else if (num === 1) {
+            this.things = this.things1;
+        } else if (num === 2) {
+            this.things = this.things2;
+        } else if (num === 3) {
+            this.things = this.things3;
+        } else {
+            console.error("Unexpected set number");
+            this.things = this.things3;
+        }
+    }
+
+    public toggleMode(): void {
+        this.lightMode =  !this.lightMode;
+
+        if (this.lightMode) {
+            document.body.classList.add('light-theme');
+        } else {
+            document.body.classList.remove('light-theme');
+        }
+    }
+
+    public handleSlider(sliderEvent: MatSliderChange): void {
+        console.log(sliderEvent);
+        this.setMaxItems(sliderEvent.value || 9);
+    }
+
+    public setMaxItems(num: number): void {
+        this.maxItems = num;
+        this.maxItemsAry = [];
+
+        for (let i = 0; i < num; i++) {
+            this.maxItemsAry.push(i + 1);
+        }
+    }
+
+    public ngOnDestroy(): void {
+        this._routerEventsSub?.unsubscribe();
     }
 }
