@@ -1,7 +1,7 @@
 <div class="top">
   <ng-container *ngIf="!orderedOrder.length">
     <div>
-      (No order)
+      (No order items)
     </div>
   </ng-container>
 
@@ -24,11 +24,11 @@
 
   <div *ngIf="pendingOrder">
     <div>
-      Thing: {{ pendingOrder.thing }} | <a (click)="cancel()">CANCEL</a>
+      Pending Order Item: {{ pendingOrder.thing }} | <a (click)="cancel()">CANCEL</a>
     </div>
-    <div>
+    <!-- <div>
       Quantity: {{ pendingOrder.quantity }} | <a (click)="addOrder()">ADD TO ORDER</a>
-    </div>
+    </div> -->
 
     <div class="nums">
       <div class="num"
