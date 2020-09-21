@@ -68,9 +68,27 @@
 
 <div class="bottom bottom-padding">
     <div *ngIf="!pendingOrder">
-        <div (click)="addThing(thing)" [class]="'thing' + (orderMap[thing] ? ' disabled' : '')" *ngFor="let thing of things">
-            <button mat-raised-button color="primary" [disabled]="orderMap[thing]">{{ thing }}</button>
+        <div [class]="'things-container' + (!thingsSplit2.length ? ' show' : ' hide')">
+            <div (click)="addThing(thing)" [class]="'thing' + (orderMap[thing] ? ' disabled' : '')" *ngFor="let thing of things">
+                <button mat-raised-button color="primary" [disabled]="orderMap[thing]">{{ thing }}</button>
+            </div>
         </div>
+
+        <div [class]="'things-split-container' + (thingsSplit2.length ? ' show' : ' hide')">
+            <div class="things-single-split">
+                <div (click)="addThing(thing)" [class]="'thing' + (orderMap[thing] ? ' disabled' : '')" *ngFor="let thing of thingsSplit1">
+                    <button mat-raised-button color="primary" [disabled]="orderMap[thing]">{{ thing }}</button>
+                </div>
+            </div>
+
+            <div class="things-single-split">
+                <div (click)="addThing(thing)" [class]="'thing' + (orderMap[thing] ? ' disabled' : '')" *ngFor="let thing of thingsSplit2">
+                    <button mat-raised-button color="primary" [disabled]="orderMap[thing]">{{ thing }}</button>
+                </div>
+            </div>
+        </div>
+        
+        
     </div>
 
     <div *ngIf="pendingOrder">

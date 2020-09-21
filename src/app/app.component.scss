@@ -167,6 +167,30 @@ a.github-link {
     color: #209ed3;
 }
 
+.things-container, .things-single-split {
+    div:nth-child(5n) {
+        padding-bottom: 12px;
+    }
+}
+
+.things-split-container {
+    display: flex;
+    div.things-single-split:first-child {
+        padding-right: 6px;
+    }
+    div.things-single-split:last-child {
+        padding-left: 6px;
+    }
+}
+
+.things-container.hide {
+    display: none;
+}
+
+.things-split-container.hide {
+    display: none;
+}
+
 @media only screen and (max-width: $desktop_width) {
 
 }
@@ -198,6 +222,14 @@ a.github-link {
 
     mat-slide-toggle {
         font-size: 16px;
+    }
+
+    .things-container.hide {
+        display: block;
+    }
+    
+    .things-split-container.show {
+        display: none;
     }
 }
 

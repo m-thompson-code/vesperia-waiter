@@ -16,6 +16,8 @@ export type Thing = 'Amango tea' | 'Spicy shrimp' | 'Tortoise stew' | 'Earth spi
 export class AppComponent implements OnInit, OnDestroy {
     
     public things: Thing[] = [];
+    public thingsSplit1: Thing[] = [];
+    public thingsSplit2: Thing[] = [];
 
     public order: {
         thing: Thing;
@@ -248,7 +250,7 @@ export class AppComponent implements OnInit, OnDestroy {
     }
 
     public setItems(num: number, toggleEvent?: MatSlideToggleChange): void {
-        console.log(num, toggleEvent);
+        // console.log(num, toggleEvent);
 
         if (toggleEvent && !toggleEvent.checked) {
             num -= 1;
@@ -256,15 +258,25 @@ export class AppComponent implements OnInit, OnDestroy {
 
         if (num === 0) {
             this.things = this.things0;
+            this.thingsSplit1 = this.things0;
+            this.thingsSplit2 = [];
         } else if (num === 1) {
             this.things = this.things1;
+            this.thingsSplit1 = this.things1;
+            this.thingsSplit2 = [];
         } else if (num === 2) {
             this.things = this.things2;
+            this.thingsSplit1 = this.things1;
+            this.thingsSplit2 = this.things2.slice(this.things1.length);
         } else if (num === 3) {
             this.things = this.things3;
+            this.thingsSplit1 = this.things1;
+            this.thingsSplit2 = this.things3.slice(this.things1.length);
         } else {
             console.error("Unexpected set number");
             this.things = this.things3;
+            this.thingsSplit1 = this.things1;
+            this.thingsSplit2 = this.things3.slice(this.things1.length);
         }
     }
 
@@ -279,7 +291,7 @@ export class AppComponent implements OnInit, OnDestroy {
     }
 
     public handleSlider(sliderEvent: MatSliderChange): void {
-        console.log(sliderEvent);
+        // console.log(sliderEvent);
         this.setMaxItems(sliderEvent.value || 9);
     }
 
