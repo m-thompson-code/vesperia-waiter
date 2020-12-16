@@ -31,7 +31,7 @@ export type RestaurantItemTranslationMap = {
     'Set lunch A': 'Set lunch A' | '蒸し剛玉定食Ａ';
 }
 
-export type ActionTralsationMap = {
+export type ActionTranslationMap = {
     'Forget that last one...': 'Forget that last one...' | 'を、キャンセルして';
 }
 
@@ -80,13 +80,16 @@ export class AppComponent implements OnInit, OnDestroy {
     public maxItemsAry: number[] = [];
 
     public restaurentItemTranslationMap!: RestaurantItemTranslationMap;
+    public actionTranslationMap!: ActionTranslationMap;
 
     constructor(private router: Router, public firebaseService: FirebaseService, private analyticsService: AnalyticsService) {
 
     }
     
     public ngOnInit(): void {
-        this.setTranslationMap('jp');
+        const lang = (localStorage.getItem("lang") || 'eng') as 'eng';
+
+        this.setTranslationMap(lang);
 
         this._routerEventsSub = this.router.events.subscribe(routerEvent=> {
 			this._checkRouterEvent(routerEvent as RouterEvent);
@@ -197,7 +200,40 @@ export class AppComponent implements OnInit, OnDestroy {
     }
 
     public setTranslationMap(lang: 'eng' | 'jp'): void {
-        if (lang === 'eng') {
+        try {
+            localStorage.setItem("lang", lang);
+        } catch (error) {
+            console.error(error);
+        }
+
+        if (lang === 'jp') {
+            this.restaurentItemTranslationMap = {
+                'Amango tea': 'うまうまティー',
+                'Spicy shrimp': 'ひやピリ中華',
+                'Tortoise stew': 'トータス鍋',
+                'Earth spirit parfait': 'アイススピリッツパフェ',
+                'Set lunch B': '煮獅子定食',
+                'Spaghetti and meatballs': '蹄パスタセット',
+                'Tomato soup': 'ラピラブ汁',
+                'Ice cream': 'バルーンゴーストアイス',
+                'Grilled fish': '焼ヤきネグネグ',
+                'Mandragosso': 'マンドラゴラッソ',
+                'Polwigle dumpling': 'オタオタ団子',
+                'Mabo curry': 'マーボーカレー',
+                "Don's special": 'ドンの気まぐれご飯',
+                'Clam chowder': '巨大甲殻汁',
+                'Seafood pasta': 'あまあまパスタ',
+                'Fruit cocktail': 'ごってごってカクテル',
+                'Rappig steak': 'ブウサギステーキ',
+                'Cream stew': 'やみなべ',
+                'Chocolate cake': '蜜蜜ザッハトルテ',
+                'Set lunch A': '蒸し剛玉定食Ａ',
+            };
+
+            this.actionTranslationMap = {
+                'Forget that last one...': 'を、キャンセルして',
+            };
+        } else {
             this.restaurentItemTranslationMap = {
                 'Amango tea': 'Amango tea',
                 'Spicy shrimp': 'Spicy shrimp',
@@ -220,28 +256,9 @@ export class AppComponent implements OnInit, OnDestroy {
                 'Chocolate cake': 'Chocolate cake',
                 'Set lunch A': 'Set lunch A',
             };
-        } else {
-            this.restaurentItemTranslationMap = {
-                'Amango tea': 'うまうまティー',
-                'Spicy shrimp': 'ひやピリ中華',
-                'Tortoise stew': 'トータス鍋',
-                'Earth spirit parfait': 'アイススピリッツパフェ',
-                'Set lunch B': '煮獅子定食',
-                'Spaghetti and meatballs': '蹄パスタセット',
-                'Tomato soup': 'ラピラブ汁',
-                'Ice cream': 'バルーンゴーストアイス',
-                'Grilled fish': '焼ヤきネグネグ',
-                'Mandragosso': 'マンドラゴラッソ',
-                'Polwigle dumpling': 'オタオタ団子',
-                'Mabo curry': 'マーボーカレー',
-                "Don's special": 'ドンの気まぐれご飯',
-                'Clam chowder': '巨大甲殻汁',
-                'Seafood pasta': 'あまあまパスタ',
-                'Fruit cocktail': 'ごってごってカクテル',
-                'Rappig steak': 'ブウサギステーキ',
-                'Cream stew': 'やみなべ',
-                'Chocolate cake': '蜜蜜ザッハトルテ',
-                'Set lunch A': '蒸し剛玉定食Ａ',
+
+            this.actionTranslationMap = {
+                'Forget that last one...': 'Forget that last one...',
             };
         }
     }

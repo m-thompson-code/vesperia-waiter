@@ -163,8 +163,13 @@ div {
     margin-right: 16px;
 }
 
-a.github-link {
+a.link {
     color: #209ed3;
+    text-decoration: none;
+    cursor: pointer;
+}
+a.link:hover, a.link:active, a.link:focus {
+    text-decoration: underline;
 }
 
 .restaurant-items-container, .restaurant-items-single-split {
