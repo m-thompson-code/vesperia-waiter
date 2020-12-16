@@ -11,20 +11,25 @@
         <button mat-raised-button color="accent" (click)="toggleMode()">{{ lightMode ? 'Dark Mode' : 'Light Mode' }}</button>
     </div>
 
+    <div class="bottom-padding">
+        <a class="donate-button button" mat-raised-button color="primary" href="https://paypal.me/mthompsoncode" target="_blank">Donate</a>
+        <button mat-raised-button color="accent" (click)="toggleMode()">{{ lightMode ? 'Dark Mode' : 'Light Mode' }}</button>
+    </div>
+
     <mat-slide-toggle
-        [checked]="things === things1 || things === things2 || things === things3" 
+        [checked]="restaurantItems === restaurantItems1 || restaurantItems === restaurantItems2 || restaurantItems === restaurantItems3" 
         (change)="setItems(1, $event)">
         Show last half of page 1's order items
     </mat-slide-toggle>
 
     <mat-slide-toggle
-        [checked]="things === things2 || things === things3" 
+        [checked]="restaurantItems === restaurantItems2 || restaurantItems === restaurantItems3" 
         (change)="setItems(2, $event)">
         Show first half of page 2's order items
     </mat-slide-toggle>
 
     <mat-slide-toggle class="bottom-padding"
-        [checked]="things === things3" 
+        [checked]="restaurantItems === restaurantItems3" 
         (change)="setItems(3, $event)">
         Show last half of page 2's order items
     </mat-slide-toggle>
@@ -52,7 +57,7 @@
 
         <ng-container *ngIf="orderedOrder.length">
             <div class="order-item" *ngFor="let _o of orderedOrder; let i = index">
-                {{ _o. thing }} - {{ _o.quantity }}
+                {{ _o.restaurantItem }} - {{ _o.quantity }}
             </div>
         </ng-container>
     </div>
@@ -68,22 +73,22 @@
 
 <div class="bottom bottom-padding">
     <div *ngIf="!pendingOrder">
-        <div [class]="'things-container' + (!thingsSplit2.length ? ' show' : ' hide')">
-            <div (click)="addThing(thing)" [class]="'thing' + (orderMap[thing] ? ' disabled' : '')" *ngFor="let thing of things">
-                <button mat-raised-button color="primary" [disabled]="orderMap[thing]">{{ thing }}</button>
+        <div [class]="'restaurant-items-container' + (!restaurantItemsSplit2.length ? ' show' : ' hide')">
+            <div (click)="addRestaurantItem(restaurantItem)" [class]="'restaurant-item' + (orderMap[restaurantItem] ? ' disabled' : '')" *ngFor="let restaurantItem of restaurantItems">
+                <button mat-raised-button color="primary" [disabled]="orderMap[restaurantItem]">{{ restaurantItem }}</button>
             </div>
         </div>
 
-        <div [class]="'things-split-container' + (thingsSplit2.length ? ' show' : ' hide')">
-            <div class="things-single-split">
-                <div (click)="addThing(thing)" [class]="'thing' + (orderMap[thing] ? ' disabled' : '')" *ngFor="let thing of thingsSplit1">
-                    <button mat-raised-button color="primary" [disabled]="orderMap[thing]">{{ thing }}</button>
+        <div [class]="'restaurant-items-split-container' + (restaurantItemsSplit2.length ? ' show' : ' hide')">
+            <div class="restaurant-items-single-split">
+                <div (click)="addRestaurantItem(restaurantItem)" [class]="'restaurant-item' + (orderMap[restaurantItem] ? ' disabled' : '')" *ngFor="let restaurantItem of restaurantItemsSplit1">
+                    <button mat-raised-button color="primary" [disabled]="orderMap[restaurantItem]">{{ restaurantItem }}</button>
                 </div>
             </div>
 
-            <div class="things-single-split">
-                <div (click)="addThing(thing)" [class]="'thing' + (orderMap[thing] ? ' disabled' : '')" *ngFor="let thing of thingsSplit2">
-                    <button mat-raised-button color="primary" [disabled]="orderMap[thing]">{{ thing }}</button>
+            <div class="restaurant-items-single-split">
+                <div (click)="addRestaurantItem(restaurantItem)" [class]="'restaurant-item' + (orderMap[restaurantItem] ? ' disabled' : '')" *ngFor="let restaurantItem of restaurantItemsSplit2">
+                    <button mat-raised-button color="primary" [disabled]="orderMap[restaurantItem]">{{ restaurantItem }}</button>
                 </div>
             </div>
         </div>
@@ -93,7 +98,7 @@
 
     <div *ngIf="pendingOrder">
         <div class="pending-order">
-            {{ pendingOrder.thing }}
+            {{ pendingOrder.restaurantItem }}
         </div>
 
         <div class="nums-container">

@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve --progress --open",
+    "start": "ng serve --open",
     "build": "ng build -c=production --aot",
     "host": "firebase use default && firebase deploy --only hosting",
     "deploy": "npm run build && npm run host",
@@ -23,7 +23,7 @@
     "@angular/platform-browser": "~11.0.4",
     "@angular/platform-browser-dynamic": "~11.0.4",
     "@angular/router": "~11.0.4",
-    "firebase": "^7.21.0",
+    "firebase": "^8.2.0",
     "rxjs": "~6.6.0",
     "tslib": "^2.0.0",
     "zone.js": "~0.10.2"

@@ -6,7 +6,34 @@ import { Subscription } from 'rxjs';
 import { AnalyticsService } from './services/analytics.service';
 import { FirebaseService } from './services/firebase.service';
 
-export type Thing = 'Amango tea' | 'Spicy shrimp' | 'Tortoise stew' | 'Earth spirit parfait' | 'Set lunch B' | 'Spaghetti and meatballs' | 'Tomato soup' | 'Ice cream' | 'Grilled fish' | 'Mandragosso' | 'Polwigle dumpling' | 'Mabo curry' | "Don's special" | 'Clam chowder' | 'Seafood pasta' | 'Fruit cocktail' | 'Rappig steak' | 'Cream stew' | 'Chocolate cake' | 'Set lunch A';
+export type RestaurantItem = 'Amango tea' | 'Spicy shrimp' | 'Tortoise stew' | 'Earth spirit parfait' | 'Set lunch B' | 'Spaghetti and meatballs' | 'Tomato soup' | 'Ice cream' | 'Grilled fish' | 'Mandragosso' | 'Polwigle dumpling' | 'Mabo curry' | "Don's special" | 'Clam chowder' | 'Seafood pasta' | 'Fruit cocktail' | 'Rappig steak' | 'Cream stew' | 'Chocolate cake' | 'Set lunch A';
+
+export type RestaurantItemTranslationMap = {
+    'Amango tea': 'Amango tea' | 'うまうまティー';
+    'Spicy shrimp': 'Spicy shrimp' | 'ひやピリ中華';
+    'Tortoise stew': 'Tortoise stew' | 'トータス鍋';
+    'Earth spirit parfait': 'Earth spirit parfait' | 'アイススピリッツパフェ';
+    'Set lunch B': 'Set lunch B' | '煮獅子定食';
+    'Spaghetti and meatballs': 'Spaghetti and meatballs' | '蹄パスタセット';
+    'Tomato soup': 'Tomato soup' | 'ラピラブ汁';
+    'Ice cream': 'Ice cream' | 'バルーンゴーストアイス';
+    'Grilled fish': 'Grilled fish' | '焼ヤきネグネグ';
+    'Mandragosso': 'Mandragosso' | 'マンドラゴラッソ';
+    'Polwigle dumpling': 'Polwigle dumpling' | 'オタオタ団子';
+    'Mabo curry': 'Mabo curry' | 'マーボーカレー';
+    "Don's special": "Don's special" | 'ドンの気まぐれご飯';
+    'Clam chowder': 'Clam chowder' | '巨大甲殻汁';
+    'Seafood pasta': 'Seafood pasta' | 'あまあまパスタ';
+    'Fruit cocktail': 'Fruit cocktail' | 'ごってごってカクテル';
+    'Rappig steak': 'Rappig steak' | 'ブウサギステーキ';
+    'Cream stew': 'Cream stew' | 'やみなべ';
+    'Chocolate cake': 'Chocolate cake' | '蜜蜜ザッハトルテ';
+    'Set lunch A': 'Set lunch A' | '蒸し剛玉定食Ａ';
+}
+
+export type ActionTralsationMap = {
+    'Forget that last one...': 'Forget that last one...' | 'を、キャンセルして';
+}
 
 @Component({
     selector: 'app-root',
@@ -15,26 +42,26 @@ export type Thing = 'Amango tea' | 'Spicy shrimp' | 'Tortoise stew' | 'Earth spi
 })
 export class AppComponent implements OnInit, OnDestroy {
     
-    public things: Thing[] = [];
-    public thingsSplit1: Thing[] = [];
-    public thingsSplit2: Thing[] = [];
+    public restaurantItems: RestaurantItem[] = [];
+    public restaurantItemsSplit1: RestaurantItem[] = [];
+    public restaurantItemsSplit2: RestaurantItem[] = [];
 
     public order: {
-        thing: Thing;
+        restaurantItem: RestaurantItem;
         quantity: number;
     }[] = [];
 
     public orderedOrder: {
-        thing: Thing;
+        restaurantItem: RestaurantItem;
         quantity: number;
     }[] = [];
 
     public orderMap: {
-        [thing in Thing]?: boolean;
+        [restaurantItem in RestaurantItem]?: boolean;
     } = {};
 
     public pendingOrder?: {
-        thing: Thing;
+        restaurantItem: RestaurantItem;
         quantity: number;
     }
 
@@ -42,21 +69,25 @@ export class AppComponent implements OnInit, OnDestroy {
 
     public showSettings?: boolean;
 
-    public things0: Thing[] = [];
-    public things1: Thing[] = [];
-    public things2: Thing[] = [];
-    public things3: Thing[] = [];
+    public restaurantItems0: RestaurantItem[] = [];
+    public restaurantItems1: RestaurantItem[] = [];
+    public restaurantItems2: RestaurantItem[] = [];
+    public restaurantItems3: RestaurantItem[] = [];
 
     public lightMode?: boolean;
 
     public maxItems: number = 0;
     public maxItemsAry: number[] = [];
 
+    public restaurentItemTranslationMap!: RestaurantItemTranslationMap;
+
     constructor(private router: Router, public firebaseService: FirebaseService, private analyticsService: AnalyticsService) {
 
     }
     
     public ngOnInit(): void {
+        this.setTranslationMap('jp');
+
         this._routerEventsSub = this.router.events.subscribe(routerEvent=> {
 			this._checkRouterEvent(routerEvent as RouterEvent);
         });
@@ -64,7 +95,7 @@ export class AppComponent implements OnInit, OnDestroy {
         this.order = [];
         this.orderedOrder = [];
 
-        this.things0 = [
+        this.restaurantItems0 = [
             'Amango tea',
             'Spicy shrimp',
             'Tortoise stew',
@@ -88,7 +119,7 @@ export class AppComponent implements OnInit, OnDestroy {
             // 'Set lunch A',
         ];
 
-        this.things1 = [
+        this.restaurantItems1 = [
             'Amango tea',
             'Spicy shrimp',
             'Tortoise stew',
@@ -113,7 +144,7 @@ export class AppComponent implements OnInit, OnDestroy {
         ];
 
         
-        this.things2 = [
+        this.restaurantItems2 = [
             'Amango tea',
             'Spicy shrimp',
             'Tortoise stew',
@@ -137,7 +168,7 @@ export class AppComponent implements OnInit, OnDestroy {
             // 'Set lunch A',
         ];
 
-        this.things3 = [
+        this.restaurantItems3 = [
             'Amango tea',
             'Spicy shrimp',
             'Tortoise stew',
@@ -164,6 +195,56 @@ export class AppComponent implements OnInit, OnDestroy {
         this.setItems(0);
         this.setMaxItems(9);
     }
+
+    public setTranslationMap(lang: 'eng' | 'jp'): void {
+        if (lang === 'eng') {
+            this.restaurentItemTranslationMap = {
+                'Amango tea': 'Amango tea',
+                'Spicy shrimp': 'Spicy shrimp',
+                'Tortoise stew': 'Tortoise stew',
+                'Earth spirit parfait': 'Earth spirit parfait',
+                'Set lunch B': 'Set lunch B',
+                'Spaghetti and meatballs': 'Spaghetti and meatballs',
+                'Tomato soup': 'Tomato soup',
+                'Ice cream': 'Ice cream',
+                'Grilled fish': 'Grilled fish',
+                'Mandragosso': 'Mandragosso',
+                'Polwigle dumpling': 'Polwigle dumpling',
+                'Mabo curry': 'Mabo curry',
+                "Don's special": "Don's special",
+                'Clam chowder': 'Clam chowder',
+                'Seafood pasta': 'Seafood pasta',
+                'Fruit cocktail': 'Fruit cocktail',
+                'Rappig steak': 'Rappig steak',
+                'Cream stew': 'Cream stew',
+                'Chocolate cake': 'Chocolate cake',
+                'Set lunch A': 'Set lunch A',
+            };
+        } else {
+            this.restaurentItemTranslationMap = {
+                'Amango tea': 'うまうまティー',
+                'Spicy shrimp': 'ひやピリ中華',
+                'Tortoise stew': 'トータス鍋',
+                'Earth spirit parfait': 'アイススピリッツパフェ',
+                'Set lunch B': '煮獅子定食',
+                'Spaghetti and meatballs': '蹄パスタセット',
+                'Tomato soup': 'ラピラブ汁',
+                'Ice cream': 'バルーンゴーストアイス',
+                'Grilled fish': '焼ヤきネグネグ',
+                'Mandragosso': 'マンドラゴラッソ',
+                'Polwigle dumpling': 'オタオタ団子',
+                'Mabo curry': 'マーボーカレー',
+                "Don's special": 'ドンの気まぐれご飯',
+                'Clam chowder': '巨大甲殻汁',
+                'Seafood pasta': 'あまあまパスタ',
+                'Fruit cocktail': 'ごってごってカクテル',
+                'Rappig steak': 'ブウサギステーキ',
+                'Cream stew': 'やみなべ',
+                'Chocolate cake': '蜜蜜ザッハトルテ',
+                'Set lunch A': '蒸し剛玉定食Ａ',
+            };
+        }
+    }
     
 	private _checkRouterEvent(routerEvent: RouterEvent): void {
 		// Tracking page views
@@ -178,9 +259,9 @@ export class AppComponent implements OnInit, OnDestroy {
         }
     }
 
-    public addThing(thing: Thing): void {
+    public addRestaurantItem(restaurantItem: RestaurantItem): void {
         this.pendingOrder = {
-            thing: thing,
+            restaurantItem: restaurantItem,
             quantity: 1,
         };
     }
@@ -226,21 +307,21 @@ export class AppComponent implements OnInit, OnDestroy {
         this.orderMap = {};
 
         for (const order of this.orderedOrder) {
-            this.orderMap[order.thing] = true;
+            this.orderMap[order.restaurantItem] = true;
         }
 
         this.orderedOrder.sort((a, b) => {
             let aV = 0;
             let bV = 0;
 
-            for (let i = 0; i < this.things.length; i++) {
-                const thing = this.things[i];
+            for (let i = 0; i < this.restaurantItems.length; i++) {
+                const restaurantItem = this.restaurantItems[i];
 
-                if (a.thing === thing) {
+                if (a.restaurantItem === restaurantItem) {
                 aV = i;
                 }
 
-                if (b.thing === thing) {
+                if (b.restaurantItem === restaurantItem) {
                 bV = i;
                 }
             }
@@ -257,26 +338,26 @@ export class AppComponent implements OnInit, OnDestroy {
         }
 
         if (num === 0) {
-            this.things = this.things0;
-            this.thingsSplit1 = this.things0;
-            this.thingsSplit2 = [];
+            this.restaurantItems = this.restaurantItems0;
+            this.restaurantItemsSplit1 = this.restaurantItems0;
+            this.restaurantItemsSplit2 = [];
         } else if (num === 1) {
-            this.things = this.things1;
-            this.thingsSplit1 = this.things1;
-            this.thingsSplit2 = [];
+            this.restaurantItems = this.restaurantItems1;
+            this.restaurantItemsSplit1 = this.restaurantItems1;
+            this.restaurantItemsSplit2 = [];
         } else if (num === 2) {
-            this.things = this.things2;
-            this.thingsSplit1 = this.things1;
-            this.thingsSplit2 = this.things2.slice(this.things1.length);
+            this.restaurantItems = this.restaurantItems2;
+            this.restaurantItemsSplit1 = this.restaurantItems1;
+            this.restaurantItemsSplit2 = this.restaurantItems2.slice(this.restaurantItems1.length);
         } else if (num === 3) {
-            this.things = this.things3;
-            this.thingsSplit1 = this.things1;
-            this.thingsSplit2 = this.things3.slice(this.things1.length);
+            this.restaurantItems = this.restaurantItems3;
+            this.restaurantItemsSplit1 = this.restaurantItems1;
+            this.restaurantItemsSplit2 = this.restaurantItems3.slice(this.restaurantItems1.length);
         } else {
             console.error("Unexpected set number");
-            this.things = this.things3;
-            this.thingsSplit1 = this.things1;
-            this.thingsSplit2 = this.things3.slice(this.things1.length);
+            this.restaurantItems = this.restaurantItems3;
+            this.restaurantItemsSplit1 = this.restaurantItems1;
+            this.restaurantItemsSplit2 = this.restaurantItems3.slice(this.restaurantItems1.length);
         }
     }
 

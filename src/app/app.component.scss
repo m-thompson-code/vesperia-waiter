@@ -114,7 +114,7 @@ div {
     }
 }
 
-.thing {
+.restaurant-item {
     width: 100%;
     text-align: center;
     padding-bottom: 4px;
@@ -127,7 +127,7 @@ div {
     }
 }
 
-.thing.disabled {
+.restaurant-item.disabled {
     button:hover {
         text-decoration: none;
     }
@@ -167,27 +167,27 @@ a.github-link {
     color: #209ed3;
 }
 
-.things-container, .things-single-split {
+.restaurant-items-container, .restaurant-items-single-split {
     div:nth-child(5n) {
         padding-bottom: 12px;
     }
 }
 
-.things-split-container {
+.restaurant-items-split-container {
     display: flex;
-    div.things-single-split:first-child {
+    div.restaurant-items-single-split:first-child {
         padding-right: 6px;
     }
-    div.things-single-split:last-child {
+    div.restaurant-items-single-split:last-child {
         padding-left: 6px;
     }
 }
 
-.things-container.hide {
+.restaurant-items-container.hide {
     display: none;
 }
 
-.things-split-container.hide {
+.restaurant-items-split-container.hide {
     display: none;
 }
 
@@ -224,11 +224,11 @@ a.github-link {
         font-size: 16px;
     }
 
-    .things-container.hide {
+    .restaurant-items-container.hide {
         display: block;
     }
     
-    .things-split-container.show {
+    .restaurant-items-split-container.show {
         display: none;
     }
 }
