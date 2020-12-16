@@ -201,7 +201,9 @@ a.link:hover, a.link:active, a.link:focus {
 }
 
 @media only screen and (max-width: $tablet_width) and (orientation: portrait) {
-
+    .lang-credit {
+        display: block;
+    }
 }
 
 @media only screen and (max-width: $mobile_width) and (orientation: portrait) {
@@ -236,6 +238,10 @@ a.link:hover, a.link:active, a.link:focus {
     .restaurant-items-split-container.show {
         display: none;
     }
+
+    .lang-credit {
+        display: block;
+    }
 }
 
 @media only screen and (max-width: 340px) {
@@ -255,5 +261,9 @@ a.link:hover, a.link:active, a.link:focus {
     
     .settings-icon-container {
         margin-top: 2.5vw;
+    }
+
+    .lang-credit {
+        display: block;
     }
 }
